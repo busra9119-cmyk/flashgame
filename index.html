@@ -5,7 +5,7 @@
   <title>Properties of Materials Game</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Load Ruffle (Flash emulator) from CDN -->
+  <!-- Load Ruffle (Flash emulator) -->
   <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
 
   <style>
@@ -17,36 +17,70 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #000; /* black bars for letterboxing */
+      background-color: #000;
     }
 
-    #game-container {
+    /* Outer container: 16:9 frame */
+    #frame {
       width: 1600px;
+      height: 900px;
       max-width: 90%;
-      aspect-ratio: 4 / 3; /* maintains original SWF ratio */
-      background-color: #000;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      max-height: 90%;
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden; /* hides any extra space from aspect ratio differences */
+      background-color: #000;
+    }
+
+    /* Inner container: keeps SWF aspect ratio */
+    #game-container {
+      width: 100%;
+      height: 100%;
+      transform: scale(1);
+      transform-origin: top left;
     }
 
     #game-container embed {
       width: 100%;
       height: 100%;
-    }
-
-    /* Optional: make it scale down on smaller screens */
-    @media (max-width: 1600px) {
-      #game-container {
-        width: 90%;
-      }
+      display: block;
     }
   </style>
 </head>
 <body>
-  <div id="game-container">
-    <embed src="materialsproperties.swf" type="application/x-shockwave-flash">
+  <div id="frame">
+    <div id="game-container">
+      <embed src="materialsproperties.swf" type="application/x-shockwave-flash">
+    </div>
   </div>
+
+  <script>
+    // Automatically scale the SWF to fill 1600x900 without distortion
+    function scaleGame() {
+      const container = document.getElementById('game-container');
+      const frame = document.getElementById('frame');
+
+      const frameWidth = frame.clientWidth;
+      const frameHeight = frame.clientHeight;
+
+      const swfRatio = 4/3; // original SWF ratio
+      const frameRatio = frameWidth / frameHeight;
+
+      let scale;
+      if (frameRatio > swfRatio) {
+        // frame is wider than SWF
+        scale = frameHeight / 600; // 600 = SWF height
+      } else {
+        // frame is taller than SWF
+        scale = frameWidth / 800; // 800 = SWF width
+      }
+
+      container.style.transform = `scale(${scale})`;
+    }
+
+    window.addEventListener('resize', scaleGame);
+    window.addEventListener('load', scaleGame);
+  </script>
 </body>
 </html>
