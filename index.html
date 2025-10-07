@@ -9,33 +9,37 @@
   <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
 
   <style>
-    body {
-      background-color: #f8f8f8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+    html, body {
       margin: 0;
-      font-family: sans-serif;
-    }
-    #game-container {
-      width: 1920px;
-      height: 1080px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      background-color: #000;
+      padding: 0;
+      width: 100%;
+      height: 100%;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      background-color: #f8f8f8;
     }
-    embed {
-      width: 800px;
-      height: 600px;
+
+    #game-container {
+      width: 90%;
+      max-width: 1920px; /* optional: don't stretch beyond 1920px */
+      aspect-ratio: 4 / 3; /* keeps original 800x600 ratio */
+      background-color: #000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #game-container embed {
+      width: 100%;
+      height: 100%;
     }
   </style>
 </head>
 <body>
   <div id="game-container">
-    <embed src="materialsproperties.swf" width="1920" height="1080">
+    <embed src="materialproperties.swf" type="application/x-shockwave-flash">
   </div>
 </body>
 </html>
