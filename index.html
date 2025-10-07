@@ -17,13 +17,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #f8f8f8;
+      background-color: #000; /* black bars for letterboxing */
     }
 
     #game-container {
-      width: 90%;
-      max-width: 1920px; /* optional: don't stretch beyond 1920px */
-      aspect-ratio: 4 / 3; /* keeps original 800x600 ratio */
+      width: 1600px;
+      max-width: 90%;
+      aspect-ratio: 4 / 3; /* maintains original SWF ratio */
       background-color: #000;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       display: flex;
@@ -34,6 +34,13 @@
     #game-container embed {
       width: 100%;
       height: 100%;
+    }
+
+    /* Optional: make it scale down on smaller screens */
+    @media (max-width: 1600px) {
+      #game-container {
+        width: 90%;
+      }
     }
   </style>
 </head>
